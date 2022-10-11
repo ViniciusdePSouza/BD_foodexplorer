@@ -5,10 +5,14 @@ const AppError = require('./utils/AppError')
 
 const routes = require('./routes')
 
+const migrationsRun = require('./database/sqlite/migrations')
+
 const app = express()
 app.use(express.json())
 
 app.use(routes)
+
+migrationsRun()
 
 app.use(( error, req, res, next ) => {
     if(error instanceof AppError){
