@@ -29,7 +29,7 @@ class IngredientsController {
     }
 
     async show(req, res){
-        const { name } = req.body
+        const { name } = req.params
 
         const ingredient = await knex('ingredients').where({ name }).first()
 

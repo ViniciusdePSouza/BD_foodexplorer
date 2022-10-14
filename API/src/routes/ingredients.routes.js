@@ -7,6 +7,6 @@ const ingredientsController = new IngredientsController()
 
 ingredientsRoutes.post('/', ingredientsController.create)
 ingredientsRoutes.delete('/:id', ingredientsController.delete)
-ingredientsRoutes.get('/', ingredientsController.show)
+ingredientsRoutes.get('/:name', ingredientsController.show)
 
 module.exports = ingredientsRoutes
