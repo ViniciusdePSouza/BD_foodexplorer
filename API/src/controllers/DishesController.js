@@ -18,6 +18,15 @@ class DishesController{
 
         return res.json(dish)
     }
+
+    async delete(request, response){
+        const { id } = request.params
+
+        await knex('dishes').where({ id }).delete()
+
+        return response.json()
+    }
+
     
 }
 
