@@ -1,4 +1,5 @@
 const AppError = require('../utils/AppError')
+const knex = require('../database/knex')
 
 const sqliteConnection = require('../database/sqlite')
 const { hash, compare } = require('bcryptjs')
@@ -64,6 +65,14 @@ class UserController {
             password = ?,
             updated_at = DATETIME('now')
             WHERE id = ?`, [user.name, user.email, user.isAdm, user.password, id])
+
+        return res.json()
+    }
+
+    async delete(req, res) {
+        const { id } = req.params
+
+        await knex('users').where({ id }).delete()
 
         return res.json()
     }
