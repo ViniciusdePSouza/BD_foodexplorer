@@ -28,12 +28,12 @@ class IngredientsController {
         return response.json()
     }
 
-    async show(request, response){
-        const { id } = request.params
+    async show(req, res){
+        const { name } = req.body
 
-        const ingredient = await knex('ingredients').where({ id }).first()
+        const ingredient = await knex('ingredients').where({ name }).first()
 
-        return response.json(ingredient)
+        return res.json(ingredient)
     }
 }
 

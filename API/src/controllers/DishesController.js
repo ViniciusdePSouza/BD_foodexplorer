@@ -10,6 +10,15 @@ class DishesController{
 
         return res.status(201).json()
     }
+
+    async show (req, res) {
+        const { id } = req.params
+
+        const dish = await knex('dishes').where({ id }).first()
+
+        return res.json(dish)
+    }
+    
 }
 
 module.exports = DishesController
