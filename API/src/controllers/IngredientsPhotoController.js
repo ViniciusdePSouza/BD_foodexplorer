@@ -9,22 +9,23 @@ class IngredientsPhotoController {
         const diskStorage = new DiskStorage()
 
         const { ingredient_id } = req.params
-        const photoFilename = request.file.filename 
-
+        const photoFilename = req.file.filename 
+        
         const ingredient = await knex('ingredients').where({ id: ingredient_id })
-
+        
         if(!ingredient){
             throw new AppError('Ingrediente não existe')
         }
-
-        if(ingredient.photo){
+        
+        if(ingredient[0].photo){
             await diskStorage.deleteFile(ingredient.photo)
         }
+        
+        await diskStorage.saveFile(photoFilename)
 
-        const fileName = await diskStorage.saveFile(photoFilename)
-        ingredient.photo = fileName
+        ingredient[0].photo = photoFilename
 
-        await knex('ingredients').update(ingredient).where({ id: ingredient_id })
+        await knex('ingredients').update(ingredient[0]).where({ id: ingredient_id })
 
         return res.json(ingredient)
     }
