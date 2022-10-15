@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { path } = require('path');
+const path = require('path');
 const uploadConfig = require('../config/upload')
 
 class DiskStorage {
@@ -17,8 +17,8 @@ class DiskStorage {
 
         try{
             await fs.promises.stat(filePath)
-        } catch(e){
-            return false
+        } catch {
+            return 
         }
 
         await fs.promises.unlink(filePath)
