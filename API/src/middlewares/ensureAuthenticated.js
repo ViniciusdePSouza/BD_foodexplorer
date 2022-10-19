@@ -3,26 +3,32 @@ const AppError = require('../utils/AppError')
 const authConfig = require('../config/auth')
 
 function ensureAuthenticated(req, res, next) {
+    console.log('algo')
     const authHeader = req.headers.authorization
 
-    if(!authHeader){
+
+    if (!authHeader) {
         throw new AppError('JWT Token não existe', 401)
     }
 
     const [, token] = authHeader.split(' ')
 
-    try{
-       console.log({ sub: user_id } = verify(token, authConfig.jwt.secret))
+    try {
+        const subToken = verify(token, authConfig.jwt.secret)
 
-       req.user = {
-        id: Number(user_id)
-       }
+        const data = JSON.parse(subToken.sub)
 
-       console.log(req.user)
+        req.user = data
 
-       return next()
+        console.log(req.user.isAdm)
+
+        if (req.user.isAdm == 1) {
+            return next()
+        } else {
+            throw 'error'
+        }
     } catch {
-        throw new AppError('JWT Token inválido', 401)
+        throw new AppError('Apenas administradores podem inserir pratos no sistema', 401)
     }
 }
 
