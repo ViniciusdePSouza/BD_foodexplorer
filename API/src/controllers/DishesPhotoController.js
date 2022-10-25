@@ -5,9 +5,9 @@ const DiskStorage = require('../providers/diskStorage')
 
 class IngredientsPhotoController {
     async update(req, res) {
-
+        
         const diskStorage = new DiskStorage()
-
+        
         const { dish_id } = req.params
         const photoFilename = req.file.filename 
         

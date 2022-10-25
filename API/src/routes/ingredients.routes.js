@@ -12,9 +12,14 @@ const IngredientsPhotoController = require('../controllers/IngredientsPhotoContr
 const ingredientsController = new IngredientsController()
 const ingredientsPhotoController = new IngredientsPhotoController()
 
-ingredientsRoutes.post('/', ingredientsController.create)
+const ensureAdm = require('../middlewares/ensureAdm')
+const ensureAuth = require('../middlewares/ensureAuth')
+
+dishesRoutes.use(ensureAuth)
+
+ingredientsRoutes.post('/', ensureAdm, ingredientsController.create)
 ingredientsRoutes.delete('/:id', ingredientsController.delete)
 ingredientsRoutes.get('/:name', ingredientsController.show)
-ingredientsRoutes.patch('/photo/:ingredient_id', upload.single('photo'), ingredientsPhotoController.update)
+ingredientsRoutes.patch('/photo/:ingredient_id', ensureAdm, upload.single('photo'), ingredientsPhotoController.update)
 
 module.exports = ingredientsRoutes

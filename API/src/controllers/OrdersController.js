@@ -7,7 +7,7 @@ const sqliteConnection = require('../database/sqlite')
 class IngredientsController {
     async create(req, res) {
         const { status, details } = req.body
-        const { user_id } = req.params
+        const user_id = req.user.id;
 
         await knex('orders').insert({
             status,

@@ -2,8 +2,7 @@ const { verify } = require('jsonwebtoken')
 const AppError = require('../utils/AppError')
 const authConfig = require('../config/auth')
 
-function ensureAuthenticated(req, res, next) {
-    console.log('algo')
+function ensureAuth(req, res, next) {
     const authHeader = req.headers.authorization
 
 
@@ -20,16 +19,11 @@ function ensureAuthenticated(req, res, next) {
 
         req.user = data
 
-        console.log(req.user.isAdm)
+        return next()
 
-        if (req.user.isAdm == 1) {
-            return next()
-        } else {
-            throw 'error'
-        }
     } catch {
-        throw new AppError('Apenas administradores podem inserir pratos no sistema', 401)
+        throw new AppError('JWT Token inválido', 401)
     }
 }
 
-module.exports = ensureAuthenticated
+module.exports = ensureAuth

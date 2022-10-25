@@ -5,8 +5,13 @@ const ordersRoutes = Router()
 const OrdersController = require('../controllers/OrdersController')
 const ordersController = new OrdersController()
 
-ordersRoutes.post('/:user_id', ordersController.create)
-ordersRoutes.put('/:id', ordersController.update)
+const ensureAdm = require('../middlewares/ensureAdm')
+const ensureAuth = require('../middlewares/ensureAuth')
+
+dishesRoutes.use(ensureAuth)
+
+ordersRoutes.post('/', ensureAuth, ordersController.create)
+ordersRoutes.put('/:id', ensureAdm, ordersController.update)
 ordersRoutes.delete('/:id', ordersController.delete)
 ordersRoutes.get('/:id', ordersController.show)
 ordersRoutes.get('/', ordersController.index)
