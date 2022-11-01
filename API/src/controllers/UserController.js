@@ -12,7 +12,7 @@ class UserController {
         const verifyUserExists = await database.get('SELECT * FROM users WHERE email = (?)', [email])
 
         if(verifyUserExists){
-            throw new AppError('Esse email ja está em uso!')
+            throw new AppError('Esse email já está em uso!')
         }
 
         const hashedPassword = await hash(password, 8)

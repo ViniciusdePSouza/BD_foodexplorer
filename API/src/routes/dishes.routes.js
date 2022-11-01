@@ -20,7 +20,7 @@ dishesRoutes.use(ensureAuth)
 
 dishesRoutes.post('/', ensureAdm, dishesController.create)
 dishesRoutes.get('/:id', dishesController.show)
-dishesRoutes.delete('/', ensureAdm, dishesController.delete)
+dishesRoutes.delete('/:id', ensureAdm, dishesController.delete)
 dishesRoutes.patch('/photo/:dish_id', ensureAdm, upload.single('photo'), dishesPhotoController.update)
 
 module.exports = dishesRoutes

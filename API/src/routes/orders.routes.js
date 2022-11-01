@@ -8,7 +8,7 @@ const ordersController = new OrdersController()
 const ensureAdm = require('../middlewares/ensureAdm')
 const ensureAuth = require('../middlewares/ensureAuth')
 
-dishesRoutes.use(ensureAuth)
+ordersRoutes.use(ensureAuth)
 
 ordersRoutes.post('/', ensureAuth, ordersController.create)
 ordersRoutes.put('/:id', ensureAdm, ordersController.update)
