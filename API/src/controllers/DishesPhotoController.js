@@ -3,8 +3,9 @@ const knex = require('../database/knex')
 const AppError = require('../utils/AppError')
 const DiskStorage = require('../providers/diskStorage')
 
-class IngredientsPhotoController {
+class DishesPhotoController {
     async update(req, res) {
+        console.log(req.file)
         
         const diskStorage = new DiskStorage()
         
@@ -18,7 +19,7 @@ class IngredientsPhotoController {
         }
         
         if(dish[0].photo){
-            await diskStorage.deleteFile(dish.photo)
+            await diskStorage.deleteFile(dish[0].photo)
         }
         
         await diskStorage.saveFile(photoFilename)
@@ -31,4 +32,4 @@ class IngredientsPhotoController {
     }
 }
 
-module.exports = IngredientsPhotoController
+module.exports = DishesPhotoController
