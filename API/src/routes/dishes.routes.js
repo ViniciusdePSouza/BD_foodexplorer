@@ -24,7 +24,6 @@ dishesRoutes.post('/', ensureAdm, dishesController.create)
 dishesRoutes.get('/:id', dishesController.show)
 dishesRoutes.delete('/:id', ensureAdm, dishesController.delete)
 dishesRoutes.patch('/photo/:dish_id', ensureAdm, upload.single('photo'), dishesPhotoController.update)
-dishesRoutes.get('/:id', dishesController.show)
 dishesRoutes.get('/:type', gettersController.getMain)
 
 module.exports = dishesRoutes

@@ -35,6 +35,16 @@ class IngredientsController {
 
         return res.json(ingredient)
     }
+
+    async index(req, res){
+        
+            const { user_id } = req.params
+    
+            const orders = await knex('orders').where({ user_id }).orderBy('name')
+    
+            return res.json(orders)
+        
+    }
 }
 
 module.exports = IngredientsController

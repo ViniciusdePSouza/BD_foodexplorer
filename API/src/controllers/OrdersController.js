@@ -57,9 +57,9 @@ class IngredientsController {
         const order = await knex('orders').where({ id }).first()
 
         return res.json(order)
-
+        
     }
-
+    
     async index(req, res) {
         const { user_id } = req.query
 
