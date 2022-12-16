@@ -21,7 +21,7 @@ const ensureAuth = require('../middlewares/ensureAuth')
 dishesRoutes.use(ensureAuth)
 
 dishesRoutes.post('/', ensureAdm, dishesController.create)
-dishesRoutes.get('/:id', dishesController.show)
+dishesRoutes.get('/:name', dishesController.show)
 dishesRoutes.delete('/:id', ensureAdm, dishesController.delete)
 dishesRoutes.patch('/photo/:dish_id', ensureAdm, upload.single('photo'), dishesPhotoController.update)
 dishesRoutes.get('/:type', gettersController.getMain)
