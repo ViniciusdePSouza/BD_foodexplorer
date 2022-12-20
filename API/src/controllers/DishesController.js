@@ -12,10 +12,9 @@ class DishesController{
     }
 
     async show (req, res) {
-        const { name } = req.params
-        const term = '%' + name + '%'
+        const { id } = req.params
 
-        const dish = await knex('dishes').where('name', 'like', term)
+        const dish = await knex('dishes').where({ id })
 
         return res.json(dish)
     }
