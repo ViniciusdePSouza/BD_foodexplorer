@@ -15,7 +15,7 @@ const ingredientsPhotoController = new IngredientsPhotoController()
 const ensureAdm = require('../middlewares/ensureAdm')
 const ensureAuth = require('../middlewares/ensureAuth')
 
-ingredientsRoutes.use(ensureAuth)
+// ingredientsRoutes.use(ensureAuth)
 
 ingredientsRoutes.post('/', ensureAdm, ingredientsController.create)
 ingredientsRoutes.delete('/:id', ingredientsController.delete)
