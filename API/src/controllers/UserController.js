@@ -5,37 +5,41 @@ const sqliteConnection = require('../database/sqlite')
 const { hash, compare } = require('bcryptjs')
 
 class UserController {
-   async create(req, res){
-        const { name, email, password, isAdm } = req.body;
+    async create(req, res) {
+        try {
+            const { name, email, password, isAdm } = req.body;
+            console.log(req.body)
+            console.log(isAdm)
 
-        const database = await sqliteConnection()
-        const verifyUserExists = await database.get('SELECT * FROM users WHERE email = (?)', [email])
+            const database = await sqliteConnection()
+            const verifyUserExists = await database.get('SELECT * FROM users WHERE email = (?)', [email])
 
-        if(verifyUserExists){
-            throw new AppError('Esse email já está em uso!')
-        }
+            if (verifyUserExists) {
+                throw new AppError('Esse email já está em uso!')
+            }
 
-        const hashedPassword = await hash(password, 8)
+            const hashedPassword = await hash(password, 8)
 
-        await database.run('INSERT INTO users (name, email, password, isAdm) VALUES (?, ?, ?, ?)', [name, email, hashedPassword, isAdm])
+            await database.run('INSERT INTO users (name, email, password, isAdm) VALUES (?, ?, ?, ?)', [name, email, hashedPassword, isAdm])
 
-        return res.status(201).json()       
+            return res.status(201).json()
+        } catch (e) { console.log(e) }
     }
 
-    async update(req, res){
-        const { name, email, isAdm, password, oldPassword} = req.body;
+    async update(req, res) {
+        const { name, email, isAdm, password, oldPassword } = req.body;
         const user_id = req.user.id;
 
         const database = await sqliteConnection()
         const user = await database.get('SELECT * FROM users WHERE id = (?)', [user_id])
 
-        if (!user){
+        if (!user) {
             throw new AppError('Usuário não encontrado')
         }
 
         const userEmailUpdated = await database.get('SELECT * FROM users WHERE email = (?)', [email])
 
-        if(userEmailUpdated && userEmailUpdated.id !== user.id) {
+        if (userEmailUpdated && userEmailUpdated.id !== user.id) {
             throw new AppError('Email não disponível')
         }
 
@@ -43,14 +47,14 @@ class UserController {
         user.email = email ?? user.email
         user.isAdm = isAdm ?? user.isAdm
 
-        if(password && !oldPassword){
+        if (password && !oldPassword) {
             throw new AppError('Informe a antiga senha, por favor')
         }
 
-        if(password && oldPassword) {
+        if (password && oldPassword) {
             const checkOldPassword = await compare(oldPassword, user.password)
 
-            if(!checkOldPassword){
+            if (!checkOldPassword) {
                 throw new AppError('Senha inválida ')
             }
 

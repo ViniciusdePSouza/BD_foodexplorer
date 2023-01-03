@@ -18,7 +18,7 @@ const gettersController = new GettersController()
 const ensureAdm = require('../middlewares/ensureAdm')
 const ensureAuth = require('../middlewares/ensureAuth')
 
-// dishesRoutes.use(ensureAuth)
+dishesRoutes.use(ensureAuth)
 
 dishesRoutes.post('/', ensureAdm, dishesController.create)
 dishesRoutes.get('/:id', dishesController.show)
