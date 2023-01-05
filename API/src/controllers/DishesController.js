@@ -1,12 +1,16 @@
 const knex = require('../database/knex')
+const AppError = require('../utils/AppError')
+
+const DishRepository = require('../repositories/DishesRepository')
+const DishCreateService = require('../services/dish-services/DishCreateService')
 
 class DishesController{
     async create (req, res){
         const { name, description, price, type, ingredients } = req.body
 
-        await knex('dishes').insert({
-            name, description, price, type, ingredients
-        })
+        const dishRepository = new DishRepository()
+        const dishCreateService = new DishCreateService(dishRepository)
+        await dishCreateService.execute({ name, description, price, type, ingredients })
 
         return res.status(201).json()
     }
